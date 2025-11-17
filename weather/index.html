@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Weather App — Simple & Clean</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;}
+    :root{
+      --bg:#0f172a; --card:#0b1220; --accent:#38bdf8; --glass: rgba(255,255,255,0.05);
+      --text:#e6eef8; --muted:#9fb0c8;
+    }
+    body{
+      min-height:100vh;
+      background: linear-gradient(180deg,var(--bg),#071026 80%);
+      display:flex;align-items:center;justify-content:center;padding:20px;
+      color:var(--text);
+    }
+    .container{
+      width:100%;
+      max-width:920px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border-radius:16px; padding:22px; box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+      display:grid; grid-template-columns: 1fr 360px; gap:20px;
+      align-items:start;
+      backdrop-filter: blur(6px);
+    }
+    .left{ padding:18px; }
+    .search{ display:flex; gap:10px; margin-bottom:14px; }
+    .search input{
+      flex:1; padding:12px 14px; border-radius:10px; border:1px solid rgba(255,255,255,0.06);
+      background:var(--glass); color:var(--text); outline:none; font-size:15px;
+    }
+    .search button{
+      padding:12px 14px; border-radius:10px; border:none; background:var(--accent); color:#042033;
+      cursor:pointer; font-weight:600;
+    }
+    .meta{
+      display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;
+    }
+    .city{ font-size:24px; font-weight:700; }
+    .small{ color:var(--muted); font-size:13px; }
+    .weather-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:18px; border-radius:12px; display:flex; gap:18px; align-items:center;
+    }
+    .icon{
+      width:110px; height:110px; display:flex; align-items:center; justify-content:center;
+      border-radius:12px; background:rgba(255,255,255,0.03);
+      font-size:48px;
+    }
+    .details{ flex:1; }
+    .temp{ font-size:44px; font-weight:700; margin-bottom:6px; }
+    .desc{ text-transform:capitalize; color:var(--muted); margin-bottom:8px;}
+    .stats{ display:flex; gap:12px; color:var(--muted); font-size:14px; flex-wrap:wrap; }
+    .stat{ background:rgba(255,255,255,0.02); padding:8px 10px; border-radius:8px; }
+    .right{ padding:18px; }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px; padding:16px; margin-bottom:14px;
+    }
+    .toggle{ display:flex; gap:8px; align-items:center; }
+    .btn-geo{ margin-top:8px; padding:8px 10px; border-radius:8px; border:none; background:transparent; color:var(--accent); cursor:pointer; }
+    @media (max-width:880px){
+      .container{ grid-template-columns: 1fr; }
+      .icon{ width:90px; height:90px; font-size:40px; }
+      .temp{ font-size:36px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="page">
+    <div class="left">
+      <div class="search">
+        <input id="cityInput" type="text" placeholder="Enter city e.g. Mumbai" />
+        <button id="searchBtn">Search</button>
+      </div>
+
+      <div class="meta">
+        <div>
+          <div class="city" id="cityName">—</div>
+          <div class="small" id="timeLocal">—</div>
+        </div>
+        <div class="small">Last: <span id="lastUpdated">—</span></div>
+      </div>
+
+      <div class="weather-card" id="weatherCard" style="display:none;">
+        <div class="icon" id="weatherIcon">☀️</div>
+        <div class="details">
+          <div class="temp" id="temp">--°C</div>
+          <div class="desc" id="description">—</div>
+          <div class="stats" id="stats"></div>
+        </div>
+      </div>
+
+      <div class="card" id="errorCard" style="display:none; color:#ffb4b4;">
+        <strong id="errorMsg">Error</strong>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Settings</strong>
+          <div class="toggle">
+            <label class="small" for="units">°C / °F</label>
+            <select id="units" title="units">
+              <option value="metric">°C</option>
+              <option value="imperial">°F</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-top:12px;">
+          <button class="btn-geo" id="geoBtn">Use my location</button>
+          <div class="small" style="margin-top:8px;">Tip: Click city name to copy it.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <strong>Extras</strong>
+        <ul style="margin-top:10px; color:var(--muted); font-size:14px; line-height:1.6;">
+          <li>Dynamic background based on weather (sunny/rainy/clouds)</li>
+          <li>Save last city (auto-load on open)</li>
+          <li>Keyboard enter to search</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- external script -->
+  <script src="script.js"></script>
+</body>
+</html>
